@@ -277,10 +277,10 @@ int64_t LinearSourceDomain::add_source_to_scalar_flux()
         flux_y_new_[idx] /= volume ;
         flux_z_new_[idx] /= volume ;
         for (int i = 0; i < 3; i++) { // Update centroids
-        centroid_[didx + i] = centroid_t_[didx + i] * invvol;
+          centroid_[didx + i] = centroid_t_[didx + i] * invvol;
         }
         for (int i = 0; i < 6; i++) { // Update spatial moments
-        mom_matrix_[midx + i] = mom_matrix_t_[midx + i] * invvol;
+          mom_matrix_[midx + i] = mom_matrix_t_[midx + i] * invvol;
         }
       } else {
         // If the FSR was not hit this iteration, and it has never been hit in
