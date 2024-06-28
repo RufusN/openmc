@@ -441,7 +441,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
     float new_delta_y = r0_local[1] * flat_source + u()[1] * h1;
     delta_y_[g] = new_delta_y;
     float new_delta_z = r0_local[2] * flat_source + u()[2] * h1;
-    delta_z_[g] = new_delta_y;
+    delta_z_[g] = new_delta_z;
     angular_flux_[g] -= new_delta_psi * sigma_t;
   }
   // for (int g = 0; g < negroups_; g++) {
@@ -489,7 +489,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
     //   float new_delta_y = r0_local[1] * flat_source_[g] + u()[1] * h1;
     //   delta_y_[g] = new_delta_y;
     //   float new_delta_z = r0_local[2] * flat_source_[g] + u()[2] * h1;
-    //   delta_z_[g] = new_delta_y;
+    //   delta_z_[g] = new_delta_z;
     // }
 
     // Aquire lock for source region
