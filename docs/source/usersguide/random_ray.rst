@@ -418,13 +418,17 @@ in the `OpenMC Jupyter notebook collection
 ---------------
 Linear Sources
 ---------------
-Linear Sources (LS), are supported with the eigenvalue and fixed source random ray solvers. 
-LS can be toggled on with::
+Linear Sources are supported in both the eigenvalue and fixed source random ray solvers. 
+Linear Sources enable the use of coarser discretisations and lower ray populations, offsetting
+the increased computation per ray.
+
+There are two options for toggling on Linear Sources, for two dimensional problems (infinite in the z direction)::
+
+    settings.random_ray['source_shape'] = 'linear_xy' 
+
+While for three dimensional problems use::
 
     settings.random_ray['source_shape'] = 'linear' 
-
-LS enables the use of coarser discretisations and lower ray populations, offsetting
-the increased computation per ray.
 
 ---------------------------------
 Fixed Source and Eigenvalue Modes
