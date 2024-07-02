@@ -381,7 +381,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
   Position midpoint = r() + u() * (distance / 2.0);
   Position rm_local;
   Position r0_local;
-  //if (simulation::current_batch > 2) {
+ 
   if (centroid_pos[0] == centroid_pos[0]) {
     rm_local = midpoint - centroid_pos; 
     r0_local = r() - centroid_pos;
@@ -403,7 +403,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
 
 //everything in one loop, wastes LS comp calculation that might not be needed (dead length)
 //less arrays to store 
-
+  float distance_2 = distance * distance;
   // MOC incoming flux attenuation + source contribution/attenuation equation
   for (int g = 0; g < negroups_; g++) {
     float sigma_t = data::mg.macro_xs_[material].get_xs(
@@ -421,7 +421,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
     }
     float gn = exponentialG(tau); 
     float f1 = 1.0f - tau * gn;
-    float f2 = (2.0f * gn - f1) * distance * distance;
+    float f2 = (2.0f * gn - f1) * distance_2;
     float new_delta_psi =
       (angular_flux_[g] - flat_source) * f1 * distance
                         - 0.5 * dir_source * f2;
@@ -431,7 +431,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
     float g1 = 0.5f - h1;
     float g2 = exponentialG2(tau);
     g1 = g1 * flat_source * distance;
-    g2 = g2 * dir_source * distance * distance * 0.5f;
+    g2 = g2 * dir_source * distance_2 * 0.5f;
     h1 = h1 * angular_flux_[g] * distance;
     h1 = (g1 + g2 + h1) * distance;
     float new_flat_source = flat_source * distance + new_delta_psi;
@@ -441,7 +441,7 @@ void RandomRay::attenuate_flux_linear_source(double distance, bool is_active)
     float new_delta_y = r0_local[1] * flat_source + u()[1] * h1;
     delta_y_[g] = new_delta_y;
     float new_delta_z = r0_local[2] * flat_source + u()[2] * h1;
-    delta_z_[g] = new_delta_z;
+    delta_z_[g] = 0.0f;
     angular_flux_[g] -= new_delta_psi * sigma_t;
   }
   // for (int g = 0; g < negroups_; g++) {
